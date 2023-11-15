@@ -10,7 +10,7 @@ function move_cursor()
 	let id = 0;
 	let posCursor = 20;
 	clearInterval(time);
-	time = setInterval(loop, 1000);
+	time = setInterval(loop, 500);
 
 	function loop()
 	{
