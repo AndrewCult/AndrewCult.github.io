@@ -5,262 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Andrea Cultraro — Imparare a costruire</title>
 <meta name="description" content="Andrea Cultraro: sviluppo da autodidatta, dal web verso l'hardware. Progetti in C, sistemi, e il percorso per arrivarci.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Manrope:wght@300..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0E1114;
-    --surface:#161B21;
-    --line:rgba(232,234,237,.10);
-    --line-soft:rgba(232,234,237,.055);
-    --text:#E8EAED;
-    --muted:#96A0AB;
-    --accent:#D9772E;
-    --accent-dim:rgba(217,119,46,.13);
-    --live:#6E9E7C;
-    --display:'Newsreader',serif;
-    --body:'Manrope',sans-serif;
-    --mono:'IBM Plex Mono',monospace;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--bg);color:var(--text);
-    font-family:var(--body);font-weight:340;line-height:1.68;
-    -webkit-font-smoothing:antialiased;
-  }
-  ::selection{background:var(--accent-dim);color:var(--accent)}
-  a{color:inherit;text-decoration:none}
-  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
-
-  /* ---------- Spina di navigazione ---------- */
-  .spine{
-    position:fixed;left:0;top:0;bottom:0;width:74px;
-    border-right:1px solid var(--line);
-    display:flex;flex-direction:column;align-items:center;
-    justify-content:space-between;padding:28px 0;z-index:20;background:var(--bg);
-  }
-  .spine .brand{
-    color:var(--accent);display:flex;flex-direction:column;align-items:center;gap:16px;
-    opacity:.92;transition:opacity .25s;
-  }
-  .spine .brand:hover{opacity:1}
-  .spine .wordmark{
-    font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;
-    text-transform:uppercase;color:var(--text);
-    writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;
-  }
-  .spine nav{display:flex;flex-direction:column;gap:28px}
-  .spine nav a{
-    font-family:var(--mono);font-size:.61rem;letter-spacing:.19em;
-    text-transform:uppercase;color:var(--muted);
-    writing-mode:vertical-rl;transform:rotate(180deg);transition:color .25s;
-  }
-  .spine nav a:hover,.spine nav a.active{color:var(--accent)}
-  .spine .place{
-    font-family:var(--mono);font-size:.58rem;color:var(--muted);
-    writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.2em;opacity:.7;
-  }
-
-  main{margin-left:74px}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(24px,5vw,68px)}
-
-  .eyebrow{
-    font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--accent);
-    display:flex;align-items:center;gap:14px;
-  }
-  .eyebrow::after{content:'';height:1px;width:52px;background:var(--accent);opacity:.4}
-
-  /* ---------- Hero ---------- */
-  .hero{min-height:90vh;display:flex;align-items:center;border-bottom:1px solid var(--line)}
-  .hero-inner{padding:130px 0 90px}
-  .hero h1{
-    font-family:var(--display);
-    font-size:clamp(2.6rem,7.4vw,5.4rem);
-    font-weight:340;line-height:1.06;letter-spacing:-.02em;
-    margin:28px 0 32px;max-width:16em;
-  }
-  .hero h1 em{font-style:italic;color:var(--accent)}
-  .hero .lede{max-width:33em;color:var(--muted);font-size:1.07rem}
-  .hero .lede-en{
-    max-width:33em;margin-top:18px;color:var(--muted);opacity:.62;
-    font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;line-height:1.75;
-  }
-  .hero .actions{margin-top:46px;display:flex;gap:26px;align-items:center;flex-wrap:wrap}
-  .btn{
-    display:inline-flex;align-items:center;gap:10px;
-    font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--text);border:1px solid var(--line);padding:14px 24px;border-radius:2px;
-    transition:border-color .25s,background .25s;
-  }
-  .btn:hover{border-color:var(--accent);background:var(--accent-dim)}
-  .btn.ghost{border:none;padding:14px 0;color:var(--muted)}
-  .btn.ghost:hover{color:var(--accent);background:none}
-
-  section{padding:112px 0;border-bottom:1px solid var(--line)}
-  .section-head{margin-bottom:20px}
-  .section-head h2{
-    font-family:var(--display);font-weight:340;
-    font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.015em;margin-top:18px;
-  }
-  .section-intro{color:var(--muted);max-width:40em;margin-bottom:56px}
-
-  /* ---------- Progetti ---------- */
-  .project{
-    display:grid;grid-template-columns:minmax(190px,1fr) 2.4fr;gap:36px;
-    padding:40px 0;border-top:1px solid var(--line);
-    position:relative;transition:padding-left .35s ease;
-  }
-  .project:last-of-type{border-bottom:1px solid var(--line)}
-  .project::before{
-    content:'';position:absolute;left:0;top:-1px;height:1px;width:0;
-    background:var(--accent);transition:width .5s ease;
-  }
-  .project:hover::before{width:100%}
-  .project:hover{padding-left:14px}
-  .project h3{
-    font-family:var(--display);font-weight:420;font-size:1.5rem;
-    letter-spacing:-.012em;margin-bottom:6px;
-  }
-  .project .sub{
-    font-family:var(--mono);font-size:.65rem;color:var(--muted);
-    letter-spacing:.11em;text-transform:uppercase;margin-bottom:18px;
-  }
-  .project .meta{
-    font-family:var(--mono);font-size:.65rem;color:var(--muted);
-    letter-spacing:.09em;display:flex;flex-direction:column;gap:14px;padding-top:6px;
-  }
-  .meta .row b{
-    display:block;color:var(--accent);font-weight:500;
-    text-transform:uppercase;letter-spacing:.14em;font-size:.6rem;margin-bottom:3px;
-  }
-  .project p{color:var(--muted);max-width:40em;margin-bottom:.9em}
-  .project p a.inline{
-    color:var(--text);border-bottom:1px solid var(--accent);
-    padding-bottom:1px;transition:color .25s;
-  }
-  .project p a.inline:hover{color:var(--accent)}
-  .project p:last-of-type{margin-bottom:0}
-  .project .links{margin-top:20px;display:flex;gap:22px;flex-wrap:wrap}
-  .project .link{
-    font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--text);display:inline-flex;gap:8px;align-items:center;
-    border-bottom:1px solid var(--line);padding-bottom:4px;transition:border-color .25s,color .25s;
-  }
-  .project .link:hover{color:var(--accent);border-color:var(--accent)}
-  .project .link.muted{color:var(--muted);border-bottom-color:transparent;cursor:default}
-  .project .link.muted:hover{color:var(--muted)}
-
-  /* Indicatore di stato: cursore da terminale */
-  .status{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);
-    font-size:.6rem;letter-spacing:.14em;text-transform:uppercase}
-  .status .blk{width:7px;height:13px;background:var(--live);display:inline-block}
-  .status.active .blk{animation:blink 1.5s steps(1) infinite}
-  .status.paused .blk{background:var(--muted);opacity:.5}
-  .status.done .blk{background:var(--accent)}
-  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:.15}}
-
-  /* ---------- Chi sono ---------- */
-  .about{display:grid;grid-template-columns:1.15fr .85fr;gap:70px;align-items:start}
-  .about .bio p{color:var(--muted);margin-bottom:1.25em;max-width:36em}
-  .about .bio p.lead{color:var(--text);font-size:1.13rem}
-  .portrait{
-    background:var(--surface);border:1px solid var(--line);
-    padding:26px 20px 20px;display:flex;flex-direction:column;
-    align-items:center;gap:20px;position:sticky;top:40px;
-  }
-  .portrait svg{width:100%;max-width:250px;height:auto;display:block}
-  .portrait figcaption{
-    font-family:var(--mono);font-size:.6rem;color:var(--muted);
-    letter-spacing:.15em;text-transform:uppercase;text-align:center;
-  }
-  .portrait .cursor{animation:blink 1.5s steps(1) infinite}
-  .facets{margin-top:8px;border-top:1px solid var(--line-soft)}
-  .facet{
-    display:grid;grid-template-columns:150px 1fr;gap:24px;
-    padding:18px 0;border-bottom:1px solid var(--line-soft);align-items:baseline;
-  }
-  .facet b{
-    font-family:var(--mono);font-size:.62rem;color:var(--accent);
-    letter-spacing:.15em;text-transform:uppercase;font-weight:500;
-  }
-  .facet span{color:var(--muted);font-size:.95rem}
-  .skills{margin-top:34px;display:flex;flex-wrap:wrap;gap:9px}
-  .skills-note{
-    margin-top:18px;font-family:var(--mono);font-size:.66rem;
-    color:var(--muted);opacity:.72;letter-spacing:.02em;line-height:1.8;
-  }
-  .skills span{
-    font-family:var(--mono);font-size:.63rem;letter-spacing:.09em;
-    border:1px solid var(--line);padding:8px 14px;border-radius:2px;color:var(--muted);
-  }
-
-  /* ---------- Contatti ---------- */
-  .contact{border-bottom:none}
-  .contact h2{
-    font-family:var(--display);font-weight:340;font-style:italic;
-    font-size:clamp(2.4rem,6.4vw,4.4rem);letter-spacing:-.02em;margin:22px 0 20px;
-  }
-  .contact p{color:var(--muted);max-width:34em}
-  .contact .email{
-    display:inline-block;margin-top:36px;
-    font-family:var(--mono);font-size:clamp(.88rem,2.3vw,1.1rem);letter-spacing:.03em;
-    color:var(--text);border-bottom:1px solid var(--accent);padding-bottom:6px;transition:color .25s;
-  }
-  .contact .email:hover{color:var(--accent)}
-  .socials{margin-top:46px;display:flex;gap:26px;flex-wrap:wrap}
-  .socials a{
-    font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--muted);transition:color .25s;
-  }
-  .socials a:hover{color:var(--accent)}
-
-  footer{padding:36px 0 46px}
-  footer .wrap{
-    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-    font-family:var(--mono);font-size:.61rem;color:var(--muted);letter-spacing:.12em;
-    border-top:1px solid var(--line);padding-top:32px;
-  }
-
-  .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.in{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){
-    .reveal{opacity:1;transform:none;transition:none}
-    .status.active .blk{animation:none}
-    .portrait .cursor{animation:none}
-    html{scroll-behavior:auto}
-  }
-
-  @media (max-width:820px){
-    .spine{
-      position:fixed;top:0;left:0;right:0;bottom:auto;width:auto;height:54px;
-      flex-direction:row;padding:0 18px;border-right:none;border-bottom:1px solid var(--line);
-    }
-    .spine nav{flex-direction:row;gap:16px}
-    .spine .brand{flex-direction:row;gap:10px}
-    .spine nav a,.spine .place,.spine .wordmark{writing-mode:horizontal-tb;transform:none}
-    .spine .wordmark{font-size:.58rem;letter-spacing:.14em}
-    .spine .place{display:none}
-    main{margin-left:0;padding-top:54px}
-    .hero{min-height:auto}
-    .hero-inner{padding:80px 0 64px}
-    section{padding:80px 0}
-    .project{grid-template-columns:1fr;gap:16px}
-    .project .meta{flex-direction:row;flex-wrap:wrap;gap:22px}
-    .about{grid-template-columns:1fr;gap:44px}
-    .portrait{position:static}
-    .facet{grid-template-columns:1fr;gap:4px}
-  }
-
-  @media (max-width:560px){
-    .spine .wordmark{display:none}
-    .spine nav{gap:14px}
-    .spine nav a{font-size:.58rem;letter-spacing:.12em}
-  }
-</style>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
@@ -395,7 +144,7 @@
         <p class="eyebrow">Realizzati</p>
         <h2>Cose finite e consegnate</h2>
       </div>
-      <p class="section-intro reveal">Due lavori conclusi: uno di squadra, uno per un cliente vero. Diversi per contesto, ma entrambi mi hanno insegnato più della somma delle loro righe di codice.</p>
+      <p class="section-intro reveal">Tre lavori conclusi: uno di squadra, uno nato sul posto di lavoro, uno per un cliente vero. Diversi per contesto, ma tutti mi hanno insegnato più della somma delle loro righe di codice.</p>
 
       <article class="project reveal">
         <div class="meta">
@@ -414,6 +163,22 @@
             <a class="link" href="https://open-ai-project-sepia.vercel.app/" target="_blank" rel="noopener">Provalo ↗</a>
             <a class="link" href="https://github.com/AndrewCult/OpenAi_project" target="_blank" rel="noopener">Codice ↗</a>
           </div>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="meta">
+          <span class="row"><b>Stato</b><span class="status done"><span class="blk"></span>Dal 2024, in uso quotidiano</span></span>
+          <span class="row"><b>Strumenti</b>Google Sheets, Apps Script, IMPORTRANGE</span>
+          <span class="row"><b>Il mio ruolo</b>Idea, progettazione, sviluppo e manutenzione</span>
+        </div>
+        <div>
+          <h3>Cruscotto partenze</h3>
+          <p class="sub">Automazione interna · Logistica</p>
+          <p>Nato da una domanda semplice che mi è stata fatta al lavoro: si possono unire dati che stanno su file diversi? La risposta ovvia sarebbe stata farlo a mano. Invece mi sono accorto che le estrazioni dal gestionale di magazzino esistevano già, generate per altri scopi, e che si potevano riusare come sorgente.</p>
+          <p>Il risultato è un foglio che incrocia il planning delle partenze con la collocazione delle ribalte, la quantità effettivamente preparata e lo spazio disponibile sul mezzo. Non si limita a mostrare i dati: segnala le eccedenze prima che diventino un problema in banchina.</p>
+          <p>La parte interessante è stata dividere i compiti. Apps Script genera il foglio del giorno e ci scrive dentro le formule; da quel momento in poi il foglio vive da solo e ricalcola in autonomia. Prima andava aggiornato a mano ogni settimana, con copia e incolla tra file diversi.</p>
+          <p>È in uso tutti i giorni, ha bisogno di poca manutenzione — e sono l'unico che sa metterci le mani. Questo è il motivo per cui, da allora, documento tutto quello che scrivo.</p>
         </div>
       </article>
 
@@ -449,6 +214,7 @@
         <div class="bio">
           <p class="lead">I computer mi affascinano da quando ero bambino. È per questo che ho scelto di diplomarmi Ragioniere Programmatore — informatica a scuola, Pascal, Visual Basic — e poi la vita ha preso un'altra direzione.</p>
           <p>Alcune circostanze, alcune scelte sbagliate, e mi sono ritrovato a lavorare in logistica. Non è una storia drammatica: è successo, ed è quello che faccio ancora oggi. Ma la strada che avevo studiato per percorrere è rimasta lì, in attesa, e a un certo punto ho smesso di considerarla chiusa.</p>
+          <p>La spinta decisiva è arrivata ascoltando <em>Storie di Developers</em>, il podcast di Simone Torrisi: in particolare le puntate con Salvatore Sanfilippo e Matteo Collina. Due percorsi opposti — chi ha imparato da solo e chi è cresciuto dentro l'industria — che raccontavano la stessa cosa: che la strada non è mai una sola, e che non è detto sia troppo tardi.</p>
           <p>Ho ricominciato sul serio durante la quarantena, studiando HTML, CSS e JavaScript da solo. Da lì è arrivato il primo lavoro vero, poi il linguaggio C — di cui ormai sono innamorato — e la voglia di scendere sempre più vicino alla macchina. Che poi è la stessa curiosità di quando ero bambino, solo con gli strumenti per soddisfarla.</p>
           <p>La cosa che so fare meglio non è scrivere codice: è imparare qualcosa e poi spiegarlo a qualcun altro. Documento tutto quello che faccio, non per disciplina astratta, ma perché scrivere come funziona una cosa è il modo in cui verifico di averla capita — e perché così qualcun altro può riprenderla da dove l'ho lasciata.</p>
 
@@ -539,23 +305,7 @@
   </div>
 </footer>
 
-<script>
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: .1 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-  const links = document.querySelectorAll('.spine nav a');
-  const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
-  const nav = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  sections.forEach(s => s && nav.observe(s));
-</script>
+<script src="assets/main.js" defer></script>
 
 </body>
 </html>
