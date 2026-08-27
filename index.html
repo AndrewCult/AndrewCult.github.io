@@ -111,15 +111,15 @@
           <span class="row"><b>A che punto sono</b>Il kernel si avvia in QEMU: GDT minima, stack, diagnostica su terminale VGA e su porta seriale. Tabella delle interruzioni e primo gestore di eccezione scritti, ancora da collegare all'inizializzazione.</span>
         </div>
         <div>
-          <h3>construction-os</h3>
+          <h3>Construction-OS</h3>
           <p class="sub">Sistema operativo x86 a 32 bit, scritto da zero</p>
           <p>Costruirne uno da zero è il modo più diretto che ho trovato per capire cosa succede sotto il codice che scrivo di solito: come si comunica con l'hardware, come si gestisce la memoria, come si disegna un'interfaccia quando non c'è nessuna libreria a farlo per te. Non punto a sostituire niente. Punto ad arrivare in fondo un sottosistema alla volta, scrivendo di ogni pezzo la versione più piccola che funziona prima di estenderla.</p>
           <p>Oggi GRUB carica un kernel Multiboot che installa una GDT minima, ricarica i segmenti, prepara lo stack e passa il controllo al codice C. Da lì il kernel scrive la diagnostica sia sullo schermo sia sulla porta seriale, così posso leggere cosa succede anche quando il video non è d'aiuto. Il passo su cui sto lavorando adesso è la gestione delle eccezioni della CPU.</p>
           <p>Il Makefile compila l'ELF con i warning al massimo, verifica che l'header Multiboot sia valido e genera una ISO avviabile in emulatore. Dopo le eccezioni vengono timer e tastiera, poi la memoria; più avanti una shell, un filesystem minimo e — se il percorso regge — un'interfaccia a finestre in stile fine anni Novanta. La roadmap indica la direzione, non una scadenza.</p>
           <p>L'ispirazione diretta è III-Millennium OS di Alberto Sanfelice, un sistema x86 a 32 bit scritto interamente in C e Assembly, senza dipendenze esterne. Studiarlo è impegnativo — è il lavoro di chi sa già dove sta andando — ma è esattamente il tipo di riferimento che serve per capire come si risolvono certi problemi.</p>
           <div class="links">
-            <a class="link" href="https://github.com/AndrewCult/construction-os" target="_blank" >La repository del progetto</a>
-            <a class="link" href="https://github.com/511break-AS/Ante-Millennium-OS" target="_blank" rel="noopener">Il progetto che mi ispira ↗</a>
+            <a class="link" href="https://github.com/AndrewCult/construction-os" target="_blank" rel="noopener">La repository del mio progetto ↗</a>
+            <a class="link" href="https://github.com/511break-AS/Ante-Millennium-OS" target="_blank" rel="noopener">Millennium OS di Sanfelice ↗</a>
           </div>
         </div>
       </article>
