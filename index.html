@@ -106,16 +106,19 @@
 
       <article class="project reveal">
         <div class="meta">
-          <span class="row"><b>Stato</b><span class="status active"><span class="blk"></span>Fase concettuale</span></span>
-          <span class="row"><b>Ambito</b>Kernel, driver, GUI di basso livello</span>
-          <span class="row"><b>A che punto sono</b>Studio e lettura di codice altrui. Nessuna riga scritta: prima voglio capire come si parla a una macchina senza intermediari.</span>
+          <span class="row"><b>Stato</b><span class="status active"><span class="blk"></span>In sviluppo</span></span>
+          <span class="row"><b>Linguaggio</b>C17 freestanding, Assembly x86 (NASM), target i686-elf</span>
+          <span class="row"><b>A che punto sono</b>Il kernel si avvia in QEMU: GDT minima, stack, diagnostica su terminale VGA e su porta seriale. Tabella delle interruzioni e primo gestore di eccezione scritti, ancora da collegare all'inizializzazione.</span>
         </div>
         <div>
-          <h3>Un sistema operativo</h3>
-          <p class="sub">Progetto di studio a lungo termine</p>
-          <p>L'idea è costruire da zero un sistema a finestre ispirato a quelli di fine anni Novanta. Non per nostalgia: perché è l'unico modo che conosco per capire davvero cosa succede sotto: come si comunica con l'hardware, come si gestisce la memoria, come si disegna un'interfaccia quando non c'è nessuna libreria a farlo per te.</p>
+          <h3>construction-os</h3>
+          <p class="sub">Sistema operativo x86 a 32 bit, scritto da zero</p>
+          <p>Costruirne uno da zero è il modo più diretto che ho trovato per capire cosa succede sotto il codice che scrivo di solito: come si comunica con l'hardware, come si gestisce la memoria, come si disegna un'interfaccia quando non c'è nessuna libreria a farlo per te. Non punto a sostituire niente. Punto ad arrivare in fondo un sottosistema alla volta, scrivendo di ogni pezzo la versione più piccola che funziona prima di estenderla.</p>
+          <p>Oggi GRUB carica un kernel Multiboot che installa una GDT minima, ricarica i segmenti, prepara lo stack e passa il controllo al codice C. Da lì il kernel scrive la diagnostica sia sullo schermo sia sulla porta seriale, così posso leggere cosa succede anche quando il video non è d'aiuto. Il passo su cui sto lavorando adesso è la gestione delle eccezioni della CPU.</p>
+          <p>Il Makefile compila l'ELF con i warning al massimo, verifica che l'header Multiboot sia valido e genera una ISO avviabile in emulatore. Dopo le eccezioni vengono timer e tastiera, poi la memoria; più avanti una shell, un filesystem minimo e — se il percorso regge — un'interfaccia a finestre in stile fine anni Novanta. La roadmap indica la direzione, non una scadenza.</p>
           <p>L'ispirazione diretta è III-Millennium OS di Alberto Sanfelice, un sistema x86 a 32 bit scritto interamente in C e Assembly, senza dipendenze esterne. Studiarlo è impegnativo — è il lavoro di chi sa già dove sta andando — ma è esattamente il tipo di riferimento che serve per capire come si risolvono certi problemi.</p>
           <div class="links">
+            <span class="link muted">Repository privata per ora</span>
             <a class="link" href="https://github.com/511break-AS/Ante-Millennium-OS" target="_blank" rel="noopener">Il progetto che mi ispira ↗</a>
           </div>
         </div>
@@ -213,7 +216,7 @@
       <div class="about reveal">
         <div class="bio">
           <p class="lead">I computer mi affascinano da quando ero bambino. È per questo che ho scelto di diplomarmi Ragioniere Programmatore — informatica a scuola, Pascal, Visual Basic — e poi la vita ha preso un'altra direzione.</p>
-          <p>Alcune circostanze, alcune scelte sbagliate, e mi sono ritrovato a lavorare in logistica. Non è una storia drammatica: è successo, ed è quello che faccio ancora oggi. Ma la strada che avevo studiato per percorrere è rimasta lì, in attesa, e a un certo punto ho smesso di considerarla chiusa.</p>
+          <p>Poi la strada si è divisa. Circostanze, priorità che cambiano, e alla fine un mestiere diverso: la logistica, che mi ha insegnato a organizzare, a far quadrare i conti con i vincoli veri e a lavorare con le persone. Non è una storia drammatica, ed è quello che faccio ancora oggi. Ma la strada che avevo studiato per percorrere è rimasta lì, in attesa, e a un certo punto ho smesso di considerarla chiusa.</p>
           <p>La spinta decisiva è arrivata ascoltando <em>Storie di Developers</em>, il podcast di Simone Torrisi: in particolare le puntate con Salvatore Sanfilippo e Matteo Collina. Due percorsi opposti — chi ha imparato da solo e chi è cresciuto dentro l'industria — che raccontavano la stessa cosa: che la strada non è mai una sola, e che non è detto sia troppo tardi.</p>
           <p>Ho ricominciato sul serio durante la quarantena, studiando HTML, CSS e JavaScript da solo. Da lì è arrivato il primo lavoro vero, poi il linguaggio C — di cui ormai sono innamorato — e la voglia di scendere sempre più vicino alla macchina. Che poi è la stessa curiosità di quando ero bambino, solo con gli strumenti per soddisfarla.</p>
           <p>La cosa che so fare meglio non è scrivere codice: è imparare qualcosa e poi spiegarlo a qualcun altro. Documento tutto quello che faccio, non per disciplina astratta, ma perché scrivere come funziona una cosa è il modo in cui verifico di averla capita — e perché così qualcun altro può riprenderla da dove l'ho lasciata.</p>
